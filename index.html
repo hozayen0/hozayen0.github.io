@@ -1116,5 +1116,54 @@
 
   document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 </script>
+<!-- Privacy Popup -->
+<div id="popup-overlay" style="position:fixed;inset:0;background:rgba(10,10,8,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(6px);">
+  <div style="background:#0A0A08;border:1px solid rgba(200,255,0,0.25);border-radius:4px;max-width:520px;width:100%;padding:3rem;position:relative;">
+   
+    <p style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#C8FF00;margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem;">
+      <span style="display:inline-block;width:20px;height:1px;background:#C8FF00;"></span>
+      Notice
+    </p>
+
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:#F5F2EB;letter-spacing:0.03em;line-height:1.05;margin-bottom:1.25rem;">
+      <!-- Privacy Popup -->
+<div id="popup-overlay" style="position:fixed;inset:0;background:rgba(10,10,8,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(6px);">
+  <div style="background:#0A0A08;border:1px solid rgba(200,255,0,0.25);border-radius:4px;max-width:680px;width:100%;padding:3rem;position:relative;">
+   
+    <p style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#C8FF00;margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem;">
+      <span style="display:inline-block;width:20px;height:1px;background:#C8FF00;"></span>
+      Notice
+    </p>
+
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:#F5F2EB;letter-spacing:0.03em;line-height:1.05;margin-bottom:1.25rem;">
+      Attention.
+    </h2>
+
+    <p style="font-family:'DM Sans',sans-serif;font-size:0.92rem;font-weight:300;color:rgba(245,242,235,0.65);line-height:1.85;margin-bottom:2.25rem;">
+      Some of the photos used on this site are AI-generated for privacy reasons and to best fit the website's design. I am ready to provide actual photos upon request.
+    </p>
+
+    <div style="display:flex;gap:0.75rem;flex-wrap:nowrap;">
+
+      <button onclick="closePopup()" style="font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:#0A0A08;background:#C8FF00;border:none;border-radius:2px;padding:0.85rem 1.75rem;cursor:pointer;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+        Yes, I agree
+      </button>
+
+      <button onclick="closePopup()" style="font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:#F5F2EB;background:#0A0A08;border:1px solid rgba(245,242,235,0.2);border-radius:2px;padding:0.85rem 1.75rem;cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(245,242,235,0.6)'" onmouseout="this.style.borderColor='rgba(245,242,235,0.2)'">
+        Yes, I agree — but in black
+      </button>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  function closePopup() {
+    const overlay = document.getElementById('popup-overlay');
+    overlay.style.transition = 'opacity 0.4s ease';
+    overlay.style.opacity = '0';
+    setTimeout(() => overlay.style.display = 'none', 400);
+  }
+</script>
 </body>
 </html>
