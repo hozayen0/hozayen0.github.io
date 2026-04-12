@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Marketing & Brand Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0A0A08;
+    --white: #F5F2EB;
+    --cream: #EDE9DF;
+    --accent: #C8FF00;
+    --accent2: #FF4D1C;
+    --gray: #888880;
+    --border: rgba(255,255,255,0.08);
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.08s ease, width 0.2s, height 0.2s;
+    opacity: 0.5;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 3rem;
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    background: rgba(10,10,8,0.7);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--accent);
+    padding: 0.5rem 1.2rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 5rem 3rem 5rem 3rem;
+    position: relative; z-index: 2;
+  }
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+  .hero-headline {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 8vw, 7rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    margin-bottom: 2rem;
+  }
+  .hero-headline span { color: var(--accent); }
+  .hero-sub {
+    font-size: 1rem;
+    color: rgba(245,242,235,0.65);
+    line-height: 1.8;
+    max-width: 460px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+  .hero-btns { display: flex; gap: 1rem; align-items: center; }
+  .btn-primary {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--accent);
+    padding: 0.9rem 2rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-ghost {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--white);
+    border: 1px solid rgba(245,242,235,0.2);
+    padding: 0.9rem 2rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: border-color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--white); }
+  .hero-metrics {
+    display: flex; gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .metric-item {}
+  .metric-num {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: var(--white);
+    line-height: 1;
+  }
+  .metric-num span { color: var(--accent); }
+  .metric-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+  .hero-right {
+    position: relative;
+    display: flex; align-items: stretch;
+  }
+  .hero-img-wrap {
+    position: relative;
+    width: 100%; overflow: hidden;
+  }
+  .hero-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(20%);
+    opacity: 0.85;
+  }
+  .hero-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, var(--black) 0%, transparent 30%);
+  }
+  .hero-img-label {
+    position: absolute;
+    bottom: 2rem; right: 2rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray);
+    writing-mode: vertical-rl;
+  }
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 2.5rem; left: 3rem;
+    display: flex; align-items: center; gap: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray);
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, transparent, var(--gray));
+  }
+
+  /* Marquee */
+  .marquee-wrap {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    padding: 1rem 0;
+    background: var(--accent);
+  }
+  .marquee-track {
+    display: flex;
+    animation: marquee 18s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-item {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    color: var(--black);
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 2rem;
+  }
+  .marquee-dot {
+    width: 6px; height: 6px;
+    background: var(--black);
+    border-radius: 50%;
+    opacity: 0.4;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* Section commons */
+  section { padding: 7rem 3rem; }
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 20px; height: 1px;
+    background: var(--accent);
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Story section */
+  .story {
+    background: var(--cream);
+    color: var(--black);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+  .story .section-label { color: var(--accent2); }
+  .story .section-label::before { background: var(--accent2); }
+  .story .section-title { color: var(--black); }
+  .story-text p {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: #3A3A35;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+  .story-text p strong { font-weight: 500; color: var(--black); }
+  .philosophy-box {
+    background: var(--black);
+    color: var(--white);
+    padding: 2.5rem;
+    border-radius: 4px;
+    margin-top: 2rem;
+  }
+  .philosophy-box p {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    line-height: 1.3;
+    color: var(--white) !important;
+    margin-bottom: 0 !important;
+  }
+  .philosophy-box p span { color: var(--accent); }
+  .story-visual { position: relative; }
+  .story-img-stack { position: relative; height: 580px; }
+  .story-img-main {
+    position: absolute;
+    top: 0; left: 0;
+    width: 78%; height: 78%;
+    object-fit: cover;
+    border-radius: 4px;
+    filter: grayscale(10%);
+  }
+  .story-img-accent {
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 52%; height: 52%;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 6px solid var(--cream);
+    filter: grayscale(10%);
+  }
+  .story-badge {
+    position: absolute;
+    top: 42%; left: 60%;
+    background: var(--accent);
+    color: var(--black);
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    padding: 0.5rem 1rem;
+    border-radius: 2px;
+    z-index: 2;
+    white-space: nowrap;
+  }
+
+  /* Timeline */
+  .timeline-section {
+    background: var(--black);
+  }
+  .timeline-section .section-title { color: var(--white); }
+  .timeline-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 0;
+    margin-top: 4rem;
+    border-left: 1px solid var(--border);
+    padding-left: 3rem;
+  }
+  .tl-item {
+    display: contents;
+  }
+  .tl-year {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--gray);
+    padding: 0 2rem 3rem 0;
+    position: relative;
+    align-self: start;
+  }
+  .tl-year::before {
+    content: '';
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: absolute;
+    left: -3.35rem;
+    top: 6px;
+  }
+  .tl-content {
+    padding: 0 0 3.5rem 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3.5rem;
+  }
+  .tl-item:last-child .tl-content { border-bottom: none; margin-bottom: 0; }
+  .tl-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    color: var(--white);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .tl-desc {
+    font-size: 0.9rem;
+    color: rgba(245,242,235,0.55);
+    line-height: 1.8;
+    max-width: 520px;
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+  .tl-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tl-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--gray);
+  }
+  .tl-tag.highlight { border-color: var(--accent); color: var(--accent); }
+
+  /* Work / Projects */
+  .work-section { background: #111110; }
+  .work-section .section-title { color: var(--white); }
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+  .work-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #1A1A18;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s;
+  }
+  .work-card:hover { border-color: rgba(200,255,0,0.3); }
+  .work-card.featured {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+  }
+  .work-img {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    position: relative;
+  }
+  .work-card.featured .work-img {
+    aspect-ratio: auto;
+  }
+  .work-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    filter: grayscale(15%);
+  }
+  .work-card:hover .work-img img { transform: scale(1.03); }
+  .work-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,10,8,0.6), transparent 50%);
+  }
+  .work-info {
+    padding: 1.75rem;
+  }
+  .work-status {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+  .status-live { background: rgba(200,255,0,0.12); color: var(--accent); }
+  .status-past { background: rgba(255,255,255,0.06); color: var(--gray); }
+  .work-name {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    letter-spacing: 0.03em;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+  .work-desc {
+    font-size: 0.85rem;
+    color: rgba(245,242,235,0.5);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+    font-weight: 300;
+  }
+  .work-results { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .work-result-item {}
+  .work-result-num {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .work-result-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-top: 2px;
+  }
+
+  /* Skills */
+  .skills-section {
+    background: var(--cream);
+    color: var(--black);
+  }
+  .skills-section .section-label { color: var(--accent2); }
+  .skills-section .section-label::before { background: var(--accent2); }
+  .skills-section .section-title { color: var(--black); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    margin-top: 3.5rem;
+    background: rgba(0,0,0,0.12);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .skill-group {
+    background: var(--cream);
+    padding: 2.5rem;
+    transition: background 0.2s;
+  }
+  .skill-group:hover { background: var(--black); }
+  .skill-group:hover .skill-group-title { color: var(--accent); }
+  .skill-group:hover .skill-item { color: rgba(245,242,235,0.6); }
+  .skill-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+  .skill-group-title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: var(--black);
+    letter-spacing: 0.03em;
+    margin-bottom: 1rem;
+    transition: color 0.2s;
+  }
+  .skill-item {
+    font-size: 0.85rem;
+    color: #5A5A55;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    transition: color 0.2s;
+    font-weight: 300;
+  }
+  .skill-item:last-child { border-bottom: none; }
+  .cert-strip {
+    margin-top: 3rem;
+    padding: 2rem 2.5rem;
+    background: var(--black);
+    color: var(--white);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .cert-left {}
+  .cert-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 4px;
+  }
+  .cert-name {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--white);
+    letter-spacing: 0.03em;
+  }
+  .cert-badge {
+    background: var(--accent);
+    color: var(--black);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.25rem;
+    border-radius: 2px;
+  }
+
+  /* Philosophy */
+  .philosophy-section {
+    background: var(--black);
+    padding: 7rem 3rem;
+  }
+  .philosophy-section .section-title { color: var(--white); }
+  .philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-top: 4rem;
+    background: var(--border);
+  }
+  .philosophy-card {
+    background: var(--black);
+    padding: 3rem 2.5rem;
+    transition: background 0.3s;
+  }
+  .philosophy-card:hover { background: #111110; }
+  .phil-num {
+    font-family: var(--font-display);
+    font-size: 4rem;
+    color: rgba(200,255,0,0.15);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+  .phil-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    margin-bottom: 1rem;
+  }
+  .phil-text {
+    font-size: 0.9rem;
+    color: rgba(245,242,235,0.5);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* Contact */
+  .contact-section {
+    background: var(--accent);
+    color: var(--black);
+    text-align: center;
+    padding: 7rem 3rem;
+  }
+  .contact-pre {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.5);
+    margin-bottom: 1.5rem;
+  }
+  .contact-headline {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 6rem);
+    color: var(--black);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.5rem;
+  }
+  .contact-sub {
+    font-size: 1rem;
+    color: rgba(0,0,0,0.6);
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+  .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .contact-link {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--black);
+    border: 1px solid rgba(0,0,0,0.25);
+    padding: 0.85rem 2rem;
+    border-radius: 2px;
+    text-decoration: none;
+    background: transparent;
+    transition: background 0.2s;
+  }
+  .contact-link:hover { background: rgba(0,0,0,0.08); }
+  .contact-link.solid {
+    background: var(--black);
+    color: var(--accent);
+    border-color: var(--black);
+  }
+  .contact-link.solid:hover { opacity: 0.88; }
+
+  /* Footer */
+  footer {
+    background: var(--black);
+    padding: 2rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--border);
+  }
+  footer p {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  /* Animations */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Placeholder images */
+  .ph {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .ph-dark { background: #1E1E1C; color: #444; }
+  .ph-mid { background: #2A2A28; color: #555; }
+  .ph-light { background: #D5D0C5; color: #888; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 6rem 1.5rem 4rem; }
+    section { padding: 5rem 1.5rem; }
+    .story, .work-card.featured { grid-template-columns: 1fr; }
+    .work-grid { grid-template-columns: 1fr; }
+    .work-card.featured { grid-column: span 1; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .philosophy-grid { grid-template-columns: 1fr; }
+    .timeline-grid { grid-template-columns: 120px 1fr; padding-left: 1.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Nav -->
+<nav>
+  <a href="#" class="nav-logo">Mohamed Hozayen</a>
+  <ul class="nav-links">
+    <li><a href="#story">Story</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Let's talk</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <p class="hero-tag">Marketing & Brand Builder</p>
+    <h1 class="hero-headline">
+      I WAS DOING<br>
+      MARKETING<br>
+      <span>BEFORE I KNEW</span><br>
+      WHAT IT WAS<br>
+      CALLED.
+    </h1>
+    <p class="hero-sub">At 16, I co-founded a fashion brand and grew it to 12K followers using instinct and hustle. Now at 23, after building multiple brands, moving across the world, and formalizing everything I knew — I build bridges between great products and the people who need them.</p>
+    <div class="hero-btns">
+      <a href="#work" class="btn-primary">See my work</a>
+      <a href="#story" class="btn-ghost">My story</a>
+    </div>
+    <div class="hero-metrics">
+      <div class="metric-item">
+        <p class="metric-num">12<span>K+</span></p>
+        <p class="metric-label">Followers built</p>
+      </div>
+      <div class="metric-item">
+        <p class="metric-num">3<span>+</span></p>
+        <p class="metric-label">Brands built</p>
+      </div>
+      <div class="metric-item">
+        <p class="metric-num">7<span>yr</span></p>
+        <p class="metric-label">In the game</p>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-wrap">
+      <img src="XIWSZSvQs-bcHXaubwKc6_UYTuiDge.jpg" style="width:100%;height:100%;object-fit:cover;">
+      <div class="hero-img-overlay"></div>
+      <p class="hero-img-label">Brand builder · Marketer · Creator</p>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item">Brand Strategy <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Content Creation <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Influencer Marketing <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Digital Marketing <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Product Photography <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Community Building <span class="marquee-dot"></span></div>
+    <div class="marquee-item">E-Commerce <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Video Editing <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Brand Strategy <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Content Creation <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Influencer Marketing <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Digital Marketing <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Product Photography <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Community Building <span class="marquee-dot"></span></div>
+    <div class="marquee-item">E-Commerce <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Video Editing <span class="marquee-dot"></span></div>
+  </div>
+</div>
+
+<!-- Story -->
+<section class="story" id="story">
+  <div class="story-text fade-up">
+    <p class="section-label">The Story</p>
+    <h2 class="section-title">Seven years in the making.</h2>
+    <p>It started with an obsession — not with social media, but with <strong>brands</strong>. The way a name makes you feel. The way the right message makes a stranger feel like a product was made specifically for them.</p>
+    <p>At 16, I co-founded a fashion brand. No mentor. No marketing budget. No formal education. Just a product, an Instagram account, and a relentless curiosity. We reached out to celebrities directly, built real relationships, grew to <strong>12K followers</strong>, and started seeing returning customers — people who trusted us.</p>
+    <p>Then came round two — Xelo Store, solo. <strong>Zero to 700 followers in one week.</strong> People weren't just buying, they were sending photos wearing the products, saying thank you. They treated the brand like a friend. I was building community before I knew that was a skill people get paid for.</p>
+    <p>I moved to the United States, completed the <strong>Google Digital Marketing certification</strong>, and now I'm building Kaskt — a headwear brand and a live case study that proves everything I know in practice.</p>
+    <div class="philosophy-box">
+      <p>Imagine a store inside a private house. No sign. No address. The best product in the world — and <span>nobody can find it.</span> That's a business without marketing.</p>
+    </div>
+  </div>
+  <div class="story-visual fade-up">
+    <div class="story-img-stack">
+      <img src="173c6bea-9b0e-4858-a832-14854351a180.jpg" style="width:100%;height:100%;object-fit:cover;">
+      <img src="4fe51d84-3496-408f-8ce0-0c6c816a373c.jpg" style="position:absolute; bottom:0; right:0; width:52%; height:52%; border-radius:4px; border:6px solid var(--cream); object-fit:cover;">
+      <div class="story-badge">Est. Age 16</div>
+    </div>
+  </div>
+</section>
+
+<!-- Timeline -->
+<section class="timeline-section" id="timeline">
+  <p class="section-label">The Journey</p>
+  <h2 class="section-title">Every step connected.</h2>
+  <div class="timeline-grid">
+    <div class="tl-item">
+      <div class="tl-year">Age 16</div>
+      <div class="tl-content fade-up">
+        <p class="tl-title">Savage Store — Co-Founded</p>
+        <p class="tl-desc">Built a fashion brand from zero with a friend. Reached out to celebrities directly, built genuine relationships, and grew the account to 12K followers. Learned product photography, design, and what it actually means to build a loyal customer base.</p>
+        <div class="tl-tags">
+          <span class="tl-tag highlight">12K Followers</span>
+          <span class="tl-tag">Celebrity Outreach</span>
+          <span class="tl-tag">Product Photography</span>
+          <span class="tl-tag">Returning Customers</span>
+        </div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Round Two</div>
+      <div class="tl-content fade-up">
+        <p class="tl-title">Xelo Store — Solo</p>
+        <p class="tl-desc">Armed with everything learned from round one — plus deep dives into Gary Vee, Casey Neistat, and Peter McKinnon — I launched Xelo alone. Grew from 0 to 700 followers in a single week. Built a community that treated the brand like a friend.</p>
+        <div class="tl-tags">
+          <span class="tl-tag highlight">700 Followers / Week</span>
+          <span class="tl-tag">Influencer Collabs</span>
+          <span class="tl-tag">Brand Identity</span>
+          <span class="tl-tag">Community Building</span>
+        </div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">In Between</div>
+      <div class="tl-content fade-up">
+        <p class="tl-title">Sales, Photography & Editing</p>
+        <p class="tl-desc">Worked in sales and discovered two things that drive me: analyzing data and making results from that data. Deepened photography and video skills — learning to create content that actually says something.</p>
+        <div class="tl-tags">
+          <span class="tl-tag">Data Analysis</span>
+          <span class="tl-tag">Customer Psychology</span>
+          <span class="tl-tag">Video Editing</span>
+          <span class="tl-tag">Photoshop</span>
+        </div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">The Move</div>
+      <div class="tl-content fade-up">
+        <p class="tl-title">United States + Google Certification</p>
+        <p class="tl-desc">Moved to America. Faced real hardships. Kept going. Completed the Google Digital Marketing & E-commerce Certificate through Coursera — putting a proper framework around everything I'd already been doing by instinct for years.</p>
+        <div class="tl-tags">
+          <span class="tl-tag highlight">Google Certified</span>
+          <span class="tl-tag">Digital Strategy</span>
+          <span class="tl-tag">E-Commerce</span>
+        </div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Now — 23</div>
+      <div class="tl-content fade-up">
+        <p class="tl-title">Kaskt — Building Live</p>
+        <p class="tl-desc">Building a headwear brand with a secured domain and verified trademark. Two intentions: make it genuinely successful, and use it as a live case study proving every skill in practice. Every decision is a marketing decision I can document and show.</p>
+        <div class="tl-tags">
+          <span class="tl-tag highlight">Live Case Study</span>
+          <span class="tl-tag">Trademark Secured</span>
+          <span class="tl-tag">Domain Secured</span>
+          <span class="tl-tag">Headwear Brand</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Work -->
+<section class="work-section" id="work">
+  <p class="section-label">Case Studies</p>
+  <h2 class="section-title">The work.</h2>
+  <div class="work-grid">
+
+    <div class="work-card featured fade-up">
+      <div class="work-img">
+        <img src="Screenshot 2026-04-11 183510.png" style="width:100%;height:100%;object-fit:cover;">
+        <div class="work-img-overlay"></div>
+      </div>
+      <div class="work-info" style="display:flex; flex-direction:column; justify-content:center; padding:2.5rem;">
+        <span class="work-status status-live">Live — In Progress</span>
+        <p class="work-name">Kaskt</p>
+        <p class="work-desc">A headwear brand built with two intentions: real commercial success and a live demonstration of every marketing skill I have. Domain secured. Trademark verified. Strategy documented from day one.</p>
+        <div class="work-results">
+          <div class="work-result-item">
+            <p class="work-result-num">✓</p>
+            <p class="work-result-label">Domain secured</p>
+          </div>
+          <div class="work-result-item">
+            <p class="work-result-num">✓</p>
+            <p class="work-result-label">Trademark clear</p>
+          </div>
+          <div class="work-result-item">
+            <p class="work-result-num">Live</p>
+            <p class="work-result-label">Case study</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-card fade-up">
+      <div class="work-img">
+        <img src="sW4zf3o6ikgikVXipMwIY_npxiZxK7.png" style="width:100%;height:100%;object-fit:cover;">
+        <div class="work-img-overlay"></div>
+      </div>
+      <div class="work-info">
+        <span class="work-status status-past">Fashion — E-Commerce</span>
+        <p class="work-name">Xelo Store</p>
+        <p class="work-desc">Solo brand built applying everything from round one. Grew to 700 followers in one week. Built a community that treated the brand like a trusted friend — not just a store.</p>
+        <div class="work-results">
+          <div class="work-result-item">
+            <p class="work-result-num">700</p>
+            <p class="work-result-label">Followers / week</p>
+          </div>
+          <div class="work-result-item">
+            <p class="work-result-num">Solo</p>
+            <p class="work-result-label">Built alone</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-card fade-up">
+      <div class="work-img">
+        <img src="Screenshot 2026-04-11 173345.png" style="width:100%;height:100%;object-fit:cover;">
+        <div class="work-img-overlay"></div>
+      </div>
+      <div class="work-info">
+        <span class="work-status status-past">Fashion — E-Commerce</span>
+        <p class="work-name">Savage Store</p>
+        <p class="work-desc">First brand, built at 16 with a co-founder. Grew to 12K followers. Established celebrity partnerships, built a loyal returning customer base, and handled all photography and design.</p>
+        <div class="work-results">
+          <div class="work-result-item">
+            <p class="work-result-num">12K</p>
+            <p class="work-result-label">Followers</p>
+          </div>
+          <div class="work-result-item">
+            <p class="work-result-num">Age 16</p>
+            <p class="work-result-label">Started</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Skills -->
+<section class="skills-section" id="skills">
+  <p class="section-label">What I bring</p>
+  <h2 class="section-title">Skills & tools.</h2>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <span class="skill-icon">◈</span>
+      <p class="skill-group-title">Brand Building</p>
+      <p class="skill-item">Brand identity & positioning</p>
+      <p class="skill-item">Influencer & celebrity relations</p>
+      <p class="skill-item">Community building</p>
+      <p class="skill-item">Customer psychology</p>
+      <p class="skill-item">Returning customer strategy</p>
+    </div>
+    <div class="skill-group">
+      <span class="skill-icon">◎</span>
+      <p class="skill-group-title">Content Creation</p>
+      <p class="skill-item">Product photography</p>
+      <p class="skill-item">Video shooting & editing</p>
+      <p class="skill-item">Adobe Photoshop</p>
+      <p class="skill-item">Social media content</p>
+      <p class="skill-item">Visual storytelling</p>
+    </div>
+    <div class="skill-group">
+      <span class="skill-icon">◇</span>
+      <p class="skill-group-title">Digital Marketing</p>
+      <p class="skill-item">Digital strategy</p>
+      <p class="skill-item">E-commerce marketing</p>
+      <p class="skill-item">Data analysis</p>
+      <p class="skill-item">Performance tracking</p>
+      <p class="skill-item">Customer service</p>
+    </div>
+  </div>
+  <div class="cert-strip">
+    <div class="cert-left">
+      <p class="cert-label">Certification</p>
+      <p class="cert-name">Google Digital Marketing & E-Commerce — Coursera</p>
+    </div>
+    <span class="cert-badge">Verified</span>
+  </div>
+</section>
+
+<!-- Philosophy -->
+<section class="philosophy-section" id="philosophy">
+  <p class="section-label">How I think</p>
+  <h2 class="section-title">Marketing philosophy.</h2>
+  <div class="philosophy-grid">
+    <div class="philosophy-card fade-up">
+      <p class="phil-num">01</p>
+      <p class="phil-title">Marketing is a bridge.</p>
+      <p class="phil-text">Great products fail every day because nobody can find them. Imagine a store inside a private house — no sign, no address. That's a business without marketing. I build the bridge between what you made and the person who needs it.</p>
+    </div>
+    <div class="philosophy-card fade-up">
+      <p class="phil-num">02</p>
+      <p class="phil-title">Relationships over reach.</p>
+      <p class="phil-text">At 16 I was negotiating with celebrities for partnerships. Not because I had a big budget — because I understood that real relationships outlast any paid placement. People don't buy from brands. They buy from people they trust.</p>
+    </div>
+    <div class="philosophy-card fade-up">
+      <p class="phil-num">03</p>
+      <p class="phil-title">Data tells the story.</p>
+      <p class="phil-text">Every instinct I developed has a number behind it. I'm driven by analyzing what's working, understanding why, and making decisions that move the result. Marketing without measurement is just guessing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact-section" id="contact">
+  <p class="contact-pre">Ready to build something?</p>
+  <h2 class="contact-headline">LET'S<br>TALK.</h2>
+  <p class="contact-sub">I'm not looking for a chance to prove I can learn marketing. I'm looking for a place to apply what I've spent seven years building.</p>
+  <div class="contact-links">
+    <a href="mailto:your@email.com" class="contact-link solid">Email me</a>
+    <a href="#" class="contact-link">LinkedIn</a>
+    <a href="#" class="contact-link">Download resume</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>© 2025 — Your Name</p>
+  <p>Marketing & Brand Builder · New York</p>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
+  });
+
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
